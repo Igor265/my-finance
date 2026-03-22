@@ -5,6 +5,7 @@ namespace App\Contexts\Finance\Infrastructure\Repositories;
 use App\Contexts\Finance\Domain\Entities\Transaction;
 use App\Contexts\Finance\Domain\Repositories\TransactionRepository;
 use App\Contexts\Finance\Domain\ValueObjects\Money;
+use App\Contexts\Finance\Domain\ValueObjects\Period;
 use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentTransaction;
 
@@ -56,6 +57,16 @@ class EloquentTransactionRepository implements TransactionRepository
         return EloquentTransaction::where('account_id', $accountId)
             ->get()
             ->map(fn ($model) => $this->toDomain($model))
+            ->all();
+    }
+
+    public function findByAccountIdsAndPeriod(array $accountIds, Period $period): array
+    {
+        return EloquentTransaction::whereIn('account_id', $accountIds)
+            ->whereDate('date', '>=', $period->startDate->format('Y-m-d'))
+            ->whereDate('date', '<=', $period->endDate->format('Y-m-d'))
+            ->get()
+            ->map(fn($model) => $this->toDomain($model))
             ->all();
     }
 }

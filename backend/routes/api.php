@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BudgetController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\FinancialGoalController;
+use App\Http\Controllers\Api\V1\InsightsController;
 use App\Http\Controllers\Api\V1\TransactionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +27,11 @@ Route::prefix('v1')->middleware(['auth:sanctum', 'throttle:api'])->group(functio
     Route::resource('categories', CategoryController::class)->only(['index', 'store', 'show']);
     Route::resource('budgets', BudgetController::class)->only(['index', 'store', 'show']);
     Route::resource('financial-goals', FinancialGoalController::class)->only(['index', 'store', 'show']);
+
+    Route::prefix('insights')->group(function () {
+        Route::get('summary', [InsightsController::class, 'summary']);
+        Route::get('spending', [InsightsController::class, 'spending']);
+        Route::get('budgets', [InsightsController::class, 'budgets']);
+        Route::get('goals', [InsightsController::class, 'goals']);
+    });
 });

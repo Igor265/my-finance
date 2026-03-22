@@ -48,7 +48,7 @@ class FinancialGoalController extends Controller
     {
         $goal = $this->financialGoalRepository->findById($id);
         if (! $goal || $goal->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Financial goal not found'], 404);
+            return response()->json(['message' => __('messages.financial_goal_not_found')], 404);
         }
 
         return new FinancialGoalResource($goal);

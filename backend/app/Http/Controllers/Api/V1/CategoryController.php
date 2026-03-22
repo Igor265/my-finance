@@ -56,7 +56,7 @@ class CategoryController extends Controller
     {
         $category = $this->categoryRepository->findById($id);
         if (! $category || $category->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Category not found'], 404);
+            return response()->json(['message' => __('messages.category_not_found')], 404);
         }
 
         return new CategoryResource($category);

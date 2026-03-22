@@ -56,7 +56,7 @@ class AccountController extends Controller
     {
         $account = $this->accountRepository->findById($id);
         if (! $account || $account->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Account not found'], 404);
+            return response()->json(['message' => __('messages.account_not_found')], 404);
         }
 
         return new AccountResource($account);

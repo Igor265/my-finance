@@ -70,7 +70,7 @@ it('should not create a duplicate category', function () {
         'type' => 'expense',
     ]);
     $response->assertUnprocessable();
-    expect($response->json('message'))->toBe('Category already exists');
+    expect($response->json('message'))->toBe(__('messages.exceptions.CategoryAlreadyExistsException'));
 });
 
 it('should show a category', function () {

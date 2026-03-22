@@ -53,7 +53,7 @@ class BudgetController extends Controller
     {
         $budget = $this->budgetRepository->findById($id);
         if (! $budget || $budget->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Budget not found'], 404);
+            return response()->json(['message' => __('messages.budget_not_found')], 404);
         }
 
         return new BudgetResource($budget);

@@ -33,7 +33,7 @@ class TransactionController extends Controller
     {
         $account = $this->accountRepository->findById($accountId);
         if (! $account || $account->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Transactions not found'], 404);
+            return response()->json(['message' => __('messages.transaction_not_found')], 404);
         }
         $transactions = $this->transactionRepository->findByAccountId($accountId);
 
@@ -48,7 +48,7 @@ class TransactionController extends Controller
         $validated = $request->validated();
         $account = $this->accountRepository->findById($validated['account_id']);
         if (! $account || $account->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Forbidden'], 403);
+            return response()->json(['message' => __('messages.forbidden')], 403);
         }
         $dto = new CreateTransactionDTO(
             $validated['account_id'],
@@ -71,11 +71,11 @@ class TransactionController extends Controller
     {
         $transaction = $this->transactionRepository->findById($id);
         if (! $transaction) {
-            return response()->json(['message' => 'Transaction not found'], 404);
+            return response()->json(['message' => __('messages.transaction_not_found')], 404);
         }
         $account = $this->accountRepository->findById($transaction->accountId);
         if (! $account || $account->userId !== (string) $request->user()->id) {
-            return response()->json(['message' => 'Transaction not found'], 404);
+            return response()->json(['message' => __('messages.transaction_not_found')], 404);
         }
 
         return new TransactionResource($transaction);

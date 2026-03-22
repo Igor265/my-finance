@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\SetLocaleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -13,10 +14,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->append(SetLocaleMiddleware::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (DomainException $e, Request $request) {
-            return response()->json(['message' => $e->getMessage()], 422);
+            $key = 'messages.exceptions.' . class_basename($e);
+            $message = __($key) !== $key ? __($key) : $e->getMessage();
+
+            return response()->json(['message' => $message], 422);
         });
     })->create();

@@ -18,5 +18,5 @@ it('should return the correct label', function () {
 });
 
 it('should throw an error when passed an invalid value', function () {
-    expect(fn() => TransactionType::from('error'))->toThrow(\ValueError::class);
+    expect(fn () => TransactionType::from('error'))->toThrow(ValueError::class);
 });

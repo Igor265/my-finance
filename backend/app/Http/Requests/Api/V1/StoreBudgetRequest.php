@@ -23,12 +23,12 @@ class StoreBudgetRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'category_id'      => 'required|string',
-            'maximum_amount'   => 'required|numeric|min:0.01',
+            'category_id' => 'required|string',
+            'maximum_amount' => 'required|numeric|min:0.01',
             'alert_percentage' => 'required|integer|min:1|max:100',
-            'start_date'       => 'required|date_format:Y-m-d',
-            'end_date'         => 'required|date_format:Y-m-d|after:start_date',
-            'currency'         => 'nullable|string|size:3',
+            'start_date' => 'required|date_format:Y-m-d',
+            'end_date' => 'required|date_format:Y-m-d|after:start_date',
+            'currency' => 'nullable|string|size:3',
         ];
     }
 }

@@ -61,8 +61,8 @@ it('should not create a duplicate category', function () {
 
     EloquentCategory::factory()->create([
         'user_id' => $user->id,
-        'name'    => 'Food',
-        'type'    => 'expense',
+        'name' => 'Food',
+        'type' => 'expense',
     ]);
 
     $response = $this->postJson('/api/v1/categories', [

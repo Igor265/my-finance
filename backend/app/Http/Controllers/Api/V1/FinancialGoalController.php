@@ -12,8 +12,9 @@ use Illuminate\Http\Request;
 
 class FinancialGoalController extends Controller
 {
-    readonly CreateFinancialGoalUseCase $createFinancialGoalUseCase;
-    readonly FinancialGoalRepository $financialGoalRepository;
+    public readonly CreateFinancialGoalUseCase $createFinancialGoalUseCase;
+
+    public readonly FinancialGoalRepository $financialGoalRepository;
 
     public function __construct(CreateFinancialGoalUseCase $createFinancialGoalUseCase, FinancialGoalRepository $financialGoalRepository)
     {
@@ -24,6 +25,7 @@ class FinancialGoalController extends Controller
     public function index(Request $request)
     {
         $goals = $this->financialGoalRepository->findByUserId($request->user()->id);
+
         return FinancialGoalResource::collection($goals);
     }
 
@@ -38,15 +40,17 @@ class FinancialGoalController extends Controller
             $validated['currency'] ?? 'BRL',
         );
         $goal = $this->createFinancialGoalUseCase->execute($dto);
+
         return (new FinancialGoalResource($goal))->response()->setStatusCode(201);
     }
 
     public function show(string $id, Request $request)
     {
         $goal = $this->financialGoalRepository->findById($id);
-        if (!$goal || $goal->userId !== (string) $request->user()->id) {
+        if (! $goal || $goal->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Financial goal not found'], 404);
         }
+
         return new FinancialGoalResource($goal);
     }
 

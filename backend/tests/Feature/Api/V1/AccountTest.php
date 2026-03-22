@@ -23,7 +23,7 @@ it('should create an account', function () {
 
     $account = [
         'name' => 'test',
-        'type' => 'checking'
+        'type' => 'checking',
     ];
 
     $response = $this->postJson('/api/v1/accounts', $account);
@@ -37,7 +37,7 @@ it('should not create an account with invalid data', function () {
 
     $account = [
         'name' => 'test',
-        'type' => 'error'
+        'type' => 'error',
     ];
 
     $response = $this->postJson('/api/v1/accounts', $account);
@@ -49,7 +49,7 @@ it('should show an accounts', function () {
     Sanctum::actingAs($user);
 
     $account = EloquentAccount::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
 
     $response = $this->getJson("/api/v1/accounts/{$account->id}");
@@ -61,7 +61,7 @@ it('should returns 404 for unknown account', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
-    $response = $this->getJson("/api/v1/accounts/1");
+    $response = $this->getJson('/api/v1/accounts/1');
     $response->assertNotFound();
 });
 
@@ -87,4 +87,3 @@ it('should show only own account', function () {
     $response = $this->getJson("/api/v1/accounts/{$account->id}");
     $response->assertNotFound();
 });
-

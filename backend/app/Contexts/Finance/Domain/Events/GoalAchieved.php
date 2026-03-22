@@ -7,9 +7,11 @@ use App\Contexts\Shared\Domain\DomainEvent;
 
 class GoalAchieved extends DomainEvent
 {
-    readonly string $goalId;
-    readonly string $name;
-    readonly Money $targetAmount;
+    public readonly string $goalId;
+
+    public readonly string $name;
+
+    public readonly Money $targetAmount;
 
     public function __construct(string $goalId, string $name, Money $targetAmount)
     {

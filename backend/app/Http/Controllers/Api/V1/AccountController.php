@@ -12,8 +12,9 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    readonly CreateAccountUseCase $createAccountUseCase;
-    readonly AccountRepository $accountRepository;
+    public readonly CreateAccountUseCase $createAccountUseCase;
+
+    public readonly AccountRepository $accountRepository;
 
     public function __construct(CreateAccountUseCase $createAccountUseCase, AccountRepository $accountRepository)
     {
@@ -28,6 +29,7 @@ class AccountController extends Controller
     {
         $userId = $request->user()->id;
         $accounts = $this->accountRepository->findByUserId($userId);
+
         return AccountResource::collection($accounts);
     }
 
@@ -43,6 +45,7 @@ class AccountController extends Controller
             $validated['initial_amount'] ?? 0.0, $validated['currency'] ?? 'BRL'
         );
         $account = $this->createAccountUseCase->execute($dto);
+
         return (new AccountResource($account))->response()->setStatusCode(201);
     }
 
@@ -52,9 +55,10 @@ class AccountController extends Controller
     public function show(string $id, Request $request)
     {
         $account = $this->accountRepository->findById($id);
-        if (!$account || $account->userId !== (string) $request->user()->id) {
+        if (! $account || $account->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Account not found'], 404);
         }
+
         return new AccountResource($account);
     }
 

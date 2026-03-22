@@ -7,13 +7,19 @@ use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 
 class Transaction
 {
-    readonly string $id;
-    readonly string $accountId;
-    readonly Money $amount;
-    readonly TransactionType $type;
-    readonly string $description;
-    readonly ?string $categoryId;
-    readonly \DateTimeImmutable $date;
+    public readonly string $id;
+
+    public readonly string $accountId;
+
+    public readonly Money $amount;
+
+    public readonly TransactionType $type;
+
+    public readonly string $description;
+
+    public readonly ?string $categoryId;
+
+    public readonly \DateTimeImmutable $date;
 
     public function __construct(string $id, string $accountId, Money $amount, TransactionType $type, string $description, ?string $categoryId, \DateTimeImmutable $date)
     {

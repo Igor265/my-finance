@@ -22,6 +22,7 @@ class EloquentCategoryRepository implements CategoryRepository
     public function findById(string $id): ?Category
     {
         $model = EloquentCategory::find($id);
+
         return $model ? $this->toDomain($model) : null;
     }
 
@@ -29,13 +30,14 @@ class EloquentCategoryRepository implements CategoryRepository
     {
         return EloquentCategory::where('user_id', $userId)
             ->get()
-            ->map(fn($model) => $this->toDomain($model))
+            ->map(fn ($model) => $this->toDomain($model))
             ->all();
     }
 
     public function findByUserIdAndName(string $userId, string $name): ?Category
     {
         $model = EloquentCategory::where('user_id', $userId)->where('name', $name)->first();
+
         return $model ? $this->toDomain($model) : null;
     }
 

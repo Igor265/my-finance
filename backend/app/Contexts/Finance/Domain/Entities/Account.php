@@ -8,11 +8,15 @@ use App\Contexts\Finance\Domain\ValueObjects\Money;
 
 class Account
 {
-    readonly string $id;
-    readonly string $userId;
-    readonly string $name;
-    readonly Money $balance;
-    readonly AccountType $type;
+    public readonly string $id;
+
+    public readonly string $userId;
+
+    public readonly string $name;
+
+    public readonly Money $balance;
+
+    public readonly AccountType $type;
 
     public function __construct(string $id, string $userId, string $name, Money $balance, AccountType $type)
     {
@@ -36,6 +40,7 @@ class Account
         if ($this->balance->amount < $amount->amount) {
             throw new InsufficientFundsException('Insufficient funds');
         }
+
         return new self($this->id, $this->userId, $this->name, $this->balance->subtract($amount), $this->type);
     }
 }

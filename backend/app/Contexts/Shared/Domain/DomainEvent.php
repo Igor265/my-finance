@@ -8,7 +8,7 @@ abstract class DomainEvent
 
     public function __construct()
     {
-        $this->occurredAt = new \DateTimeImmutable();
+        $this->occurredAt = new \DateTimeImmutable;
     }
 
     public function occurredAt(): \DateTimeImmutable

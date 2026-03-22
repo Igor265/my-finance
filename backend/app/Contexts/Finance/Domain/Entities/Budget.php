@@ -7,11 +7,15 @@ use App\Contexts\Finance\Domain\ValueObjects\Period;
 
 class Budget
 {
-    readonly string $id;
-    readonly string $userId;
-    readonly string $categoryId;
-    readonly BudgetLimit $limit;
-    readonly Period $period;
+    public readonly string $id;
+
+    public readonly string $userId;
+
+    public readonly string $categoryId;
+
+    public readonly BudgetLimit $limit;
+
+    public readonly Period $period;
 
     public function __construct(string $id, string $userId, string $categoryId, BudgetLimit $limit, Period $period)
     {

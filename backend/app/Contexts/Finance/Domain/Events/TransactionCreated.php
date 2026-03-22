@@ -8,11 +8,13 @@ use App\Contexts\Shared\Domain\DomainEvent;
 
 class TransactionCreated extends DomainEvent
 {
+    public readonly string $transactionId;
 
-    readonly string $transactionId;
-    readonly string $accountId;
-    readonly Money $amount;
-    readonly TransactionType $type;
+    public readonly string $accountId;
+
+    public readonly Money $amount;
+
+    public readonly TransactionType $type;
 
     public function __construct(string $transactionId, string $accountId, Money $amount, TransactionType $type)
     {

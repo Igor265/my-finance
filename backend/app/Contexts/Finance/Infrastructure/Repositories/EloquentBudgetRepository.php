@@ -25,6 +25,7 @@ class EloquentBudgetRepository implements BudgetRepository
     public function findById(string $id): ?Budget
     {
         $model = EloquentBudget::find($id);
+
         return $model ? $this->toDomain($model) : null;
     }
 
@@ -32,7 +33,7 @@ class EloquentBudgetRepository implements BudgetRepository
     {
         return EloquentBudget::where('user_id', $userId)
             ->get()
-            ->map(fn($model) => $this->toDomain($model))
+            ->map(fn ($model) => $this->toDomain($model))
             ->all();
     }
 
@@ -41,13 +42,13 @@ class EloquentBudgetRepository implements BudgetRepository
         EloquentBudget::updateOrCreate(
             ['id' => $budget->id],
             [
-                'user_id'          => $budget->userId,
-                'category_id'      => $budget->categoryId,
-                'maximum_amount'   => $budget->limit->maximum->amount,
-                'currency'         => $budget->limit->maximum->currency,
+                'user_id' => $budget->userId,
+                'category_id' => $budget->categoryId,
+                'maximum_amount' => $budget->limit->maximum->amount,
+                'currency' => $budget->limit->maximum->currency,
                 'alert_percentage' => $budget->limit->alertPercentage,
-                'start_date'       => $budget->period->startDate->format('Y-m-d'),
-                'end_date'         => $budget->period->endDate->format('Y-m-d'),
+                'start_date' => $budget->period->startDate->format('Y-m-d'),
+                'end_date' => $budget->period->endDate->format('Y-m-d'),
             ]
         );
     }

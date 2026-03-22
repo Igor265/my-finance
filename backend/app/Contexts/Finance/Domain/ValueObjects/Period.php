@@ -2,12 +2,13 @@
 
 namespace App\Contexts\Finance\Domain\ValueObjects;
 
-use \DateTimeImmutable;
+use DateTimeImmutable;
 
 class Period
 {
-    readonly DateTimeImmutable $startDate;
-    readonly DateTimeImmutable $endDate;
+    public readonly DateTimeImmutable $startDate;
+
+    public readonly DateTimeImmutable $endDate;
 
     public function __construct(DateTimeImmutable $startDate, DateTimeImmutable $endDate)
     {
@@ -28,6 +29,7 @@ class Period
         if ($date < $this->startDate || $date > $this->endDate) {
             return false;
         }
+
         return true;
     }
 

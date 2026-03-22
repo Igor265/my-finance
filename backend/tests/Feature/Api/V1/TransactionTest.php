@@ -10,10 +10,10 @@ it('should list transactions by account', function () {
     Sanctum::actingAs($user);
 
     $account = EloquentAccount::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
     $transaction = EloquentTransaction::factory()->create([
-        'account_id' => $account->id
+        'account_id' => $account->id,
     ]);
 
     $response = $this->getJson("/api/v1/accounts/{$account->id}/transactions");
@@ -24,7 +24,7 @@ it('should list transactions by account', function () {
 it('should not list transactions for unauthenticated', function () {
     $user = User::factory()->create();
     $account = EloquentAccount::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
     $response = $this->getJson("/api/v1/accounts/{$account->id}/transactions");
     $response->assertUnauthorized();
@@ -35,7 +35,7 @@ it('should create a transaction', function () {
     Sanctum::actingAs($user);
 
     $account = EloquentAccount::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
 
     $transaction = [
@@ -56,7 +56,7 @@ it('should not create a transaction with invalid data', function () {
     Sanctum::actingAs($user);
 
     $account = EloquentAccount::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
 
     $transaction = [
@@ -76,10 +76,10 @@ it('should show a transaction', function () {
     Sanctum::actingAs($user);
 
     $account = EloquentAccount::factory()->create([
-        'user_id' => $user->id
+        'user_id' => $user->id,
     ]);
     $transaction = EloquentTransaction::factory()->create([
-        'account_id' => $account->id
+        'account_id' => $account->id,
     ]);
 
     $response = $this->getJson("/api/v1/transactions/$transaction->id");
@@ -91,7 +91,7 @@ it('should returns 404 for a unknown transaction', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);
 
-    $response = $this->getJson("/api/v1/transactions/1");
+    $response = $this->getJson('/api/v1/transactions/1');
     $response->assertNotFound();
 });
 

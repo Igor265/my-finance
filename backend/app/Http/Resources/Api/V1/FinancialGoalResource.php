@@ -15,12 +15,12 @@ class FinancialGoalResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'             => $this->id,
-            'name'           => $this->name,
-            'target_amount'  => $this->targetAmount->toFloat(),
+            'id' => $this->id,
+            'name' => $this->name,
+            'target_amount' => $this->targetAmount->toFloat(),
             'current_amount' => $this->currentAmount->toFloat(),
-            'currency'       => $this->targetAmount->currency,
-            'deadline'       => $this->deadline->format('Y-m-d'),
+            'currency' => $this->targetAmount->currency,
+            'deadline' => $this->deadline->format('Y-m-d'),
         ];
     }
 }

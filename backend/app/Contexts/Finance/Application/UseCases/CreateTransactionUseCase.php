@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
 
 class CreateTransactionUseCase
 {
-    readonly TransactionRepository $transactionRepository;
+    public readonly TransactionRepository $transactionRepository;
+
     public function __construct(TransactionRepository $transactionRepository)
     {
         $this->transactionRepository = $transactionRepository;
@@ -21,6 +22,7 @@ class CreateTransactionUseCase
     {
         $transaction = new Transaction((string) Str::uuid(), $dto->accountId, Money::fromFloat($dto->amount, $dto->currency), TransactionType::from($dto->type), $dto->description, $dto->categoryId, new \DateTimeImmutable($dto->date));
         $this->transactionRepository->save($transaction);
+
         return $transaction;
     }
 }

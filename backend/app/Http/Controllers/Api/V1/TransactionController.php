@@ -13,9 +13,12 @@ use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
-    readonly CreateTransactionUseCase $createTransactionUseCase;
-    readonly TransactionRepository $transactionRepository;
-    readonly AccountRepository $accountRepository;
+    public readonly CreateTransactionUseCase $createTransactionUseCase;
+
+    public readonly TransactionRepository $transactionRepository;
+
+    public readonly AccountRepository $accountRepository;
+
     public function __construct(CreateTransactionUseCase $createTransactionUseCase, TransactionRepository $transactionRepository, AccountRepository $accountRepository)
     {
         $this->createTransactionUseCase = $createTransactionUseCase;
@@ -29,10 +32,11 @@ class TransactionController extends Controller
     public function index(string $accountId, Request $request)
     {
         $account = $this->accountRepository->findById($accountId);
-        if (!$account || $account->userId !== (string) $request->user()->id) {
+        if (! $account || $account->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Transactions not found'], 404);
         }
         $transactions = $this->transactionRepository->findByAccountId($accountId);
+
         return TransactionResource::collection($transactions);
     }
 
@@ -43,7 +47,7 @@ class TransactionController extends Controller
     {
         $validated = $request->validated();
         $account = $this->accountRepository->findById($validated['account_id']);
-        if (!$account || $account->userId !== (string) $request->user()->id) {
+        if (! $account || $account->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Forbidden'], 403);
         }
         $dto = new CreateTransactionDTO(
@@ -56,6 +60,7 @@ class TransactionController extends Controller
             $validated['category_id'] ?? null,
         );
         $transaction = $this->createTransactionUseCase->execute($dto);
+
         return (new TransactionResource($transaction))->response()->setStatusCode(201);
     }
 
@@ -65,13 +70,14 @@ class TransactionController extends Controller
     public function show(string $id, Request $request)
     {
         $transaction = $this->transactionRepository->findById($id);
-        if (!$transaction) {
+        if (! $transaction) {
             return response()->json(['message' => 'Transaction not found'], 404);
         }
         $account = $this->accountRepository->findById($transaction->accountId);
-        if (!$account || $account->userId !== (string) $request->user()->id) {
+        if (! $account || $account->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Transaction not found'], 404);
         }
+
         return new TransactionResource($transaction);
     }
 

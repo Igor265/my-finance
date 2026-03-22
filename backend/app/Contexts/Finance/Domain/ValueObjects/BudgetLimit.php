@@ -4,8 +4,9 @@ namespace App\Contexts\Finance\Domain\ValueObjects;
 
 class BudgetLimit
 {
-    readonly Money $maximum;
-    readonly int $alertPercentage;
+    public readonly Money $maximum;
+
+    public readonly int $alertPercentage;
 
     public function __construct(Money $maximum, int $alertPercentage)
     {
@@ -19,6 +20,7 @@ class BudgetLimit
     public function alertThreshold(): Money
     {
         $amount = (int) round($this->maximum->amount * ($this->alertPercentage / 100));
+
         return new Money($amount, $this->maximum->currency);
     }
 }

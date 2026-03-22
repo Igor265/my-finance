@@ -12,19 +12,23 @@ use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
-    readonly CreateBudgetUseCase $createBudgetUseCase;
-    readonly BudgetRepository $budgetRepository;
+    public readonly CreateBudgetUseCase $createBudgetUseCase;
+
+    public readonly BudgetRepository $budgetRepository;
+
     public function __construct(CreateBudgetUseCase $createBudgetUseCase, BudgetRepository $budgetRepository)
     {
         $this->createBudgetUseCase = $createBudgetUseCase;
         $this->budgetRepository = $budgetRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $budgets = $this->budgetRepository->findByUserId($request->user()->id);
+
         return BudgetResource::collection($budgets);
     }
 
@@ -41,15 +45,17 @@ class BudgetController extends Controller
             $validated['currency'] ?? 'BRL',
         );
         $budget = $this->createBudgetUseCase->execute($dto);
+
         return (new BudgetResource($budget))->response()->setStatusCode(201);
     }
 
     public function show(string $id, Request $request)
     {
         $budget = $this->budgetRepository->findById($id);
-        if (!$budget || $budget->userId !== (string) $request->user()->id) {
+        if (! $budget || $budget->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Budget not found'], 404);
         }
+
         return new BudgetResource($budget);
     }
 

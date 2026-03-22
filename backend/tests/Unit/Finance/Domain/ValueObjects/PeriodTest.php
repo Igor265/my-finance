@@ -9,7 +9,7 @@ it('should correct creat from string Y-m-d', function () {
 });
 
 it('should throw an error when startDate > endDate', function () {
-    expect(fn() => Period::fromStrings('2026-03-31', '2026-03-01'))->toThrow(\InvalidArgumentException::class);
+    expect(fn () => Period::fromStrings('2026-03-31', '2026-03-01'))->toThrow(InvalidArgumentException::class);
 });
 
 it('should return true when a date is on a period', function () {

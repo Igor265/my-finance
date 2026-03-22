@@ -15,11 +15,11 @@ class AccountResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-          'id' => $this->id,
-          'name' => $this->name,
-          'type' => $this->type->value,
-          'balance' => $this->balance->toFloat(),
-          'currency' => $this->balance->currency,
+            'id' => $this->id,
+            'name' => $this->name,
+            'type' => $this->type->value,
+            'balance' => $this->balance->toFloat(),
+            'currency' => $this->balance->currency,
         ];
     }
 }

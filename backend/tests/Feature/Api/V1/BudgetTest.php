@@ -3,6 +3,7 @@
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentBudget;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentCategory;
 use App\Models\User;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 
 it('should list budgets', function () {
@@ -40,11 +41,11 @@ it('should create a budget', function () {
     $category = EloquentCategory::factory()->create(['user_id' => $user->id]);
 
     $response = $this->postJson('/api/v1/budgets', [
-        'category_id'      => $category->id,
-        'maximum_amount'   => 1000.00,
+        'category_id' => $category->id,
+        'maximum_amount' => 1000.00,
         'alert_percentage' => 80,
-        'start_date'       => '2026-01-01',
-        'end_date'         => '2026-01-31',
+        'start_date' => '2026-01-01',
+        'end_date' => '2026-01-31',
     ]);
     $response->assertCreated();
     expect($response->json('data.maximum_amount'))->toBe(1000);
@@ -55,11 +56,11 @@ it('should not create a budget with invalid data', function () {
     Sanctum::actingAs($user);
 
     $response = $this->postJson('/api/v1/budgets', [
-        'category_id'      => (string) \Illuminate\Support\Str::uuid(),
-        'maximum_amount'   => 1000.00,
+        'category_id' => (string) Str::uuid(),
+        'maximum_amount' => 1000.00,
         'alert_percentage' => 150,
-        'start_date'       => '2026-01-01',
-        'end_date'         => '2026-01-31',
+        'start_date' => '2026-01-01',
+        'end_date' => '2026-01-31',
     ]);
     $response->assertUnprocessable();
 });

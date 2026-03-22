@@ -18,11 +18,11 @@ class FinanceServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-         $this->app->bind(AccountRepository::class, EloquentAccountRepository::class);
-         $this->app->bind(TransactionRepository::class, EloquentTransactionRepository::class);
-         $this->app->bind(CategoryRepository::class, EloquentCategoryRepository::class);
-         $this->app->bind(BudgetRepository::class, EloquentBudgetRepository::class);
-         $this->app->bind(FinancialGoalRepository::class, EloquentFinancialGoalRepository::class);
+        $this->app->bind(AccountRepository::class, EloquentAccountRepository::class);
+        $this->app->bind(TransactionRepository::class, EloquentTransactionRepository::class);
+        $this->app->bind(CategoryRepository::class, EloquentCategoryRepository::class);
+        $this->app->bind(BudgetRepository::class, EloquentBudgetRepository::class);
+        $this->app->bind(FinancialGoalRepository::class, EloquentFinancialGoalRepository::class);
     }
 
     public function boot(): void

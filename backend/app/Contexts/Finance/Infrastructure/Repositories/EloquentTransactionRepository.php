@@ -10,7 +10,6 @@ use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentTransaction;
 
 class EloquentTransactionRepository implements TransactionRepository
 {
-
     private function toDomain(EloquentTransaction $model): Transaction
     {
         return new Transaction(
@@ -27,23 +26,24 @@ class EloquentTransactionRepository implements TransactionRepository
     public function findById(string $id): ?Transaction
     {
         $model = EloquentTransaction::find($id);
+
         return $model ? $this->toDomain($model) : null;
     }
 
     public function save(Transaction $transaction): void
     {
         EloquentTransaction::updateOrCreate(
-        ['id' => $transaction->id],
-        [
-            'account_id' => $transaction->accountId,
-            'category_id' => $transaction->categoryId,
-            'description' => $transaction->description,
-            'amount' => $transaction->amount->amount,
-            'currency' => $transaction->amount->currency,
-            'date' => $transaction->date,
-            'type' => $transaction->type->value,
-        ]
-    );
+            ['id' => $transaction->id],
+            [
+                'account_id' => $transaction->accountId,
+                'category_id' => $transaction->categoryId,
+                'description' => $transaction->description,
+                'amount' => $transaction->amount->amount,
+                'currency' => $transaction->amount->currency,
+                'date' => $transaction->date,
+                'type' => $transaction->type->value,
+            ]
+        );
     }
 
     public function delete(string $id): void
@@ -54,8 +54,8 @@ class EloquentTransactionRepository implements TransactionRepository
     public function findByAccountId(string $accountId): array
     {
         return EloquentTransaction::where('account_id', $accountId)
-        ->get()
-        ->map(fn($model) => $this->toDomain($model))
-        ->all();
+            ->get()
+            ->map(fn ($model) => $this->toDomain($model))
+            ->all();
     }
 }

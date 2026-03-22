@@ -6,12 +6,17 @@ use App\Contexts\Finance\Domain\ValueObjects\Money;
 
 class FinancialGoal
 {
-    readonly string $id;
-    readonly string $userId;
-    readonly string $name;
-    readonly Money $targetAmount;
-    readonly Money $currentAmount;
-    readonly \DateTimeImmutable $deadline;
+    public readonly string $id;
+
+    public readonly string $userId;
+
+    public readonly string $name;
+
+    public readonly Money $targetAmount;
+
+    public readonly Money $currentAmount;
+
+    public readonly \DateTimeImmutable $deadline;
 
     public function __construct(string $id, string $userId, string $name, Money $targetAmount, Money $currentAmount, \DateTimeImmutable $deadline)
     {

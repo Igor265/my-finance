@@ -7,7 +7,7 @@ use App\Contexts\Finance\Domain\ValueObjects\Period;
 use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 
 beforeEach(function () {
-    $this->calculator = new BalanceCalculator();
+    $this->calculator = new BalanceCalculator;
     $this->period = Period::fromStrings('2026-03-01', '2026-03-31');
 });
 
@@ -62,4 +62,3 @@ it('should subtract the transfer of an account', function () {
     $money = $this->calculator->calculate('acc-1', $transactions, $this->period);
     expect($money->amount)->toBe(200000);
 });
-

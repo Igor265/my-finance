@@ -8,7 +8,7 @@ use App\Contexts\Finance\Domain\ValueObjects\Period;
 
 beforeEach(function () {
     $this->budgetLimit = new BudgetLimit(Money::fromFloat(1000), 80);
-    $this->budgedVerification = new BudgetChecker();
+    $this->budgedVerification = new BudgetChecker;
     $this->period = Period::fromStrings('2026-03-01', '2026-03-31');
 });
 

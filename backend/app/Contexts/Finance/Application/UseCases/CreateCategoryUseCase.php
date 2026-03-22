@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
 
 class CreateCategoryUseCase
 {
-    readonly CategoryRepository $categoryRepository;
+    public readonly CategoryRepository $categoryRepository;
+
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
@@ -25,6 +26,7 @@ class CreateCategoryUseCase
         }
         $category = new Category((string) Str::uuid(), $dto->userId, $dto->name, TransactionType::from($dto->type));
         $this->categoryRepository->save($category);
+
         return $category;
     }
 }

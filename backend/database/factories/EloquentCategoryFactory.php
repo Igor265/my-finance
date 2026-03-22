@@ -18,10 +18,10 @@ class EloquentCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'id'      => (string) Str::uuid(),
+            'id' => (string) Str::uuid(),
             'user_id' => User::factory(),
-            'name'    => $this->faker->word(),
-            'type'    => $this->faker->randomElement(TransactionType::cases())->value,
+            'name' => $this->faker->word(),
+            'type' => $this->faker->randomElement(TransactionType::cases())->value,
         ];
     }
 }

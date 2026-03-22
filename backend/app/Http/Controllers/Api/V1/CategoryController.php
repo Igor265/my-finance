@@ -12,19 +12,23 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    readonly CreateCategoryUseCase $createCategoryUseCase;
-    readonly CategoryRepository $categoryRepository;
+    public readonly CreateCategoryUseCase $createCategoryUseCase;
+
+    public readonly CategoryRepository $categoryRepository;
+
     public function __construct(CreateCategoryUseCase $createCategoryUseCase, CategoryRepository $categoryRepository)
     {
         $this->createCategoryUseCase = $createCategoryUseCase;
         $this->categoryRepository = $categoryRepository;
     }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $category = $this->categoryRepository->findByUserId($request->user()->id);
+
         return CategoryResource::collection($category);
     }
 
@@ -40,6 +44,7 @@ class CategoryController extends Controller
             $validated['type'],
         );
         $category = $this->createCategoryUseCase->execute($dto);
+
         return (new CategoryResource($category))->response()->setStatusCode(201);
 
     }
@@ -50,9 +55,10 @@ class CategoryController extends Controller
     public function show(string $id, Request $request)
     {
         $category = $this->categoryRepository->findById($id);
-        if (!$category || $category->userId !== (string) $request->user()->id) {
+        if (! $category || $category->userId !== (string) $request->user()->id) {
             return response()->json(['message' => 'Category not found'], 404);
         }
+
         return new CategoryResource($category);
     }
 

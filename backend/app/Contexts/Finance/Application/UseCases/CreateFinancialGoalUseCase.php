@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class CreateFinancialGoalUseCase
 {
-    readonly FinancialGoalRepository $financialGoalRepository;
+    public readonly FinancialGoalRepository $financialGoalRepository;
 
     public function __construct(FinancialGoalRepository $financialGoalRepository)
     {
@@ -28,6 +28,7 @@ class CreateFinancialGoalUseCase
             new \DateTimeImmutable($dto->deadline),
         );
         $this->financialGoalRepository->save($goal);
+
         return $goal;
     }
 }

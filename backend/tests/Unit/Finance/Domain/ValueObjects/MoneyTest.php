@@ -22,7 +22,7 @@ it('should correct add money', function () {
 it('should throw an error when add and currency is different', function () {
     $money1 = new Money(100, 'BRL');
     $money2 = new Money(100, 'USD');
-    expect(fn() => $money1->add($money2))->toThrow(\InvalidArgumentException::class);
+    expect(fn () => $money1->add($money2))->toThrow(InvalidArgumentException::class);
 });
 
 it('should subtract money', function () {
@@ -35,5 +35,5 @@ it('should subtract money', function () {
 it('should throw an error when subtracting and currency is different', function () {
     $money1 = new Money(100, 'BRL');
     $money2 = new Money(100, 'USD');
-    expect(fn() => $money1->subtract($money2))->toThrow(\InvalidArgumentException::class);
+    expect(fn () => $money1->subtract($money2))->toThrow(InvalidArgumentException::class);
 });

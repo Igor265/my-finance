@@ -6,10 +6,13 @@ use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 
 class Category
 {
-    readonly string $id;
-    readonly string $userId;
-    readonly string $name;
-    readonly TransactionType $type;
+    public readonly string $id;
+
+    public readonly string $userId;
+
+    public readonly string $name;
+
+    public readonly TransactionType $type;
 
     public function __construct(string $id, string $userId, string $name, TransactionType $type)
     {

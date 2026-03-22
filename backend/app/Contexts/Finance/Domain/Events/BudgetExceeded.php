@@ -7,10 +7,13 @@ use App\Contexts\Shared\Domain\DomainEvent;
 
 class BudgetExceeded extends DomainEvent
 {
-    readonly string $budgetId;
-    readonly string $categoryId;
-    readonly Money $spent;
-    readonly Money $maximum;
+    public readonly string $budgetId;
+
+    public readonly string $categoryId;
+
+    public readonly Money $spent;
+
+    public readonly Money $maximum;
 
     public function __construct(string $budgetId, string $categoryId, Money $spent, Money $maximum)
     {

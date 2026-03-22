@@ -24,6 +24,7 @@ class EloquentAccountRepository implements AccountRepository
     public function findById(string $id): ?Account
     {
         $model = EloquentAccount::find($id);
+
         return $model ? $this->toDomain($model) : null;
     }
 
@@ -31,7 +32,7 @@ class EloquentAccountRepository implements AccountRepository
     {
         return EloquentAccount::where('user_id', $userId)
             ->get()
-            ->map(fn($model) => $this->toDomain($model))
+            ->map(fn ($model) => $this->toDomain($model))
             ->all();
     }
 

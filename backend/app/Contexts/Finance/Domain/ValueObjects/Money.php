@@ -4,8 +4,9 @@ namespace App\Contexts\Finance\Domain\ValueObjects;
 
 class Money
 {
-    readonly int $amount;
-    readonly string $currency;
+    public readonly int $amount;
+
+    public readonly string $currency;
 
     public function __construct(int $amount, string $currency = 'BRL')
     {
@@ -16,6 +17,7 @@ class Money
     public static function fromFloat(float $amount, string $currency = 'BRL'): Money
     {
         $value = (int) round($amount * 100);
+
         return new self($value, $currency);
     }
 
@@ -29,6 +31,7 @@ class Money
         if ($this->currency !== $other->currency) {
             throw new \InvalidArgumentException('Currencies must be the same');
         }
+
         return new self($this->amount + $other->amount, $this->currency);
     }
 
@@ -37,6 +40,7 @@ class Money
         if ($this->currency !== $other->currency) {
             throw new \InvalidArgumentException('Currencies must be the same');
         }
+
         return new self($this->amount - $other->amount, $this->currency);
     }
 
@@ -45,6 +49,7 @@ class Money
         if (($this->currency !== $other->currency) || ($this->amount !== $other->amount)) {
             return false;
         }
+
         return true;
     }
 }

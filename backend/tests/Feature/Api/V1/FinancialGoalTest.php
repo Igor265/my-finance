@@ -37,9 +37,9 @@ it('should create a financial goal', function () {
     Sanctum::actingAs($user);
 
     $response = $this->postJson('/api/v1/financial-goals', [
-        'name'          => 'New car',
+        'name' => 'New car',
         'target_amount' => 50000.00,
-        'deadline'      => '2027-01-01',
+        'deadline' => '2027-01-01',
     ]);
     $response->assertCreated();
     expect($response->json('data.name'))->toBe('New car');
@@ -50,9 +50,9 @@ it('should not create a financial goal with invalid data', function () {
     Sanctum::actingAs($user);
 
     $response = $this->postJson('/api/v1/financial-goals', [
-        'name'          => 'New car',
+        'name' => 'New car',
         'target_amount' => -100,
-        'deadline'      => '2027-01-01',
+        'deadline' => '2027-01-01',
     ]);
     $response->assertUnprocessable();
 });

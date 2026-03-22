@@ -24,6 +24,7 @@ class EloquentFinancialGoalRepository implements FinancialGoalRepository
     public function findById(string $id): ?FinancialGoal
     {
         $model = EloquentFinancialGoal::find($id);
+
         return $model ? $this->toDomain($model) : null;
     }
 
@@ -31,7 +32,7 @@ class EloquentFinancialGoalRepository implements FinancialGoalRepository
     {
         return EloquentFinancialGoal::where('user_id', $userId)
             ->get()
-            ->map(fn($model) => $this->toDomain($model))
+            ->map(fn ($model) => $this->toDomain($model))
             ->all();
     }
 
@@ -40,12 +41,12 @@ class EloquentFinancialGoalRepository implements FinancialGoalRepository
         EloquentFinancialGoal::updateOrCreate(
             ['id' => $goal->id],
             [
-                'user_id'        => $goal->userId,
-                'name'           => $goal->name,
-                'target_amount'  => $goal->targetAmount->amount,
+                'user_id' => $goal->userId,
+                'name' => $goal->name,
+                'target_amount' => $goal->targetAmount->amount,
                 'current_amount' => $goal->currentAmount->amount,
-                'currency'       => $goal->targetAmount->currency,
-                'deadline'       => $goal->deadline->format('Y-m-d'),
+                'currency' => $goal->targetAmount->currency,
+                'deadline' => $goal->deadline->format('Y-m-d'),
             ]
         );
     }

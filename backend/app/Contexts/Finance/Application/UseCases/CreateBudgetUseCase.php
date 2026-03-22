@@ -12,11 +12,13 @@ use Illuminate\Support\Str;
 
 class CreateBudgetUseCase
 {
-    readonly BudgetRepository $budgetRepository;
+    public readonly BudgetRepository $budgetRepository;
+
     public function __construct(BudgetRepository $budgetRepository)
     {
         $this->budgetRepository = $budgetRepository;
     }
+
     public function execute(CreateBudgetDTO $dto): Budget
     {
         $budget = new Budget(
@@ -27,6 +29,7 @@ class CreateBudgetUseCase
             Period::fromStrings($dto->startDate, $dto->endDate),
         );
         $this->budgetRepository->save($budget);
+
         return $budget;
     }
 }

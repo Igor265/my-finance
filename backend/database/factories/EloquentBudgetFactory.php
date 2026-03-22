@@ -17,17 +17,17 @@ class EloquentBudgetFactory extends Factory
     public function definition(): array
     {
         $start = $this->faker->dateTimeBetween('-1 year', 'now');
-        $end   = $this->faker->dateTimeBetween($start, '+1 year');
+        $end = $this->faker->dateTimeBetween($start, '+1 year');
 
         return [
-            'id'               => (string) Str::uuid(),
-            'user_id'          => (string) Str::uuid(),
-            'category_id'      => EloquentCategory::factory(),
-            'maximum_amount'   => $this->faker->numberBetween(10000, 500000),
-            'currency'         => 'BRL',
+            'id' => (string) Str::uuid(),
+            'user_id' => (string) Str::uuid(),
+            'category_id' => EloquentCategory::factory(),
+            'maximum_amount' => $this->faker->numberBetween(10000, 500000),
+            'currency' => 'BRL',
             'alert_percentage' => $this->faker->numberBetween(1, 100),
-            'start_date'       => $start->format('Y-m-d'),
-            'end_date'         => $end->format('Y-m-d'),
+            'start_date' => $start->format('Y-m-d'),
+            'end_date' => $end->format('Y-m-d'),
         ];
     }
 }

@@ -23,10 +23,10 @@ class StoreFinancialGoalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'          => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:0.01',
-            'deadline'      => 'required|date_format:Y-m-d|after:today',
-            'currency'      => 'nullable|string|size:3',
+            'deadline' => 'required|date_format:Y-m-d|after:today',
+            'currency' => 'nullable|string|size:3',
         ];
     }
 }

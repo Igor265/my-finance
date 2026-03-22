@@ -11,7 +11,8 @@ use Illuminate\Support\Str;
 
 class CreateAccountUseCase
 {
-    readonly AccountRepository $accountRepository;
+    public readonly AccountRepository $accountRepository;
+
     public function __construct(AccountRepository $accountRepository)
     {
         $this->accountRepository = $accountRepository;
@@ -21,6 +22,7 @@ class CreateAccountUseCase
     {
         $account = new Account((string) Str::uuid(), $dto->userId, $dto->name, Money::fromFloat($dto->initialAmount, $dto->currency), AccountType::from($dto->type));
         $this->accountRepository->save($account);
+
         return $account;
     }
 }

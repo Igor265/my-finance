@@ -6,6 +6,7 @@ use App\Contexts\Finance\Domain\Entities\Category;
 use App\Contexts\Finance\Domain\Repositories\CategoryRepository;
 use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentCategory;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentCategoryRepository implements CategoryRepository
 {
@@ -32,6 +33,13 @@ class EloquentCategoryRepository implements CategoryRepository
             ->get()
             ->map(fn ($model) => $this->toDomain($model))
             ->all();
+    }
+
+    public function paginateByUserId(string $userId, int $perPage = 15): LengthAwarePaginator
+    {
+        return EloquentCategory::where('user_id', $userId)
+            ->paginate($perPage)
+            ->through(fn ($model) => $this->toDomain($model));
     }
 
     public function findByUserIdAndName(string $userId, string $name): ?Category

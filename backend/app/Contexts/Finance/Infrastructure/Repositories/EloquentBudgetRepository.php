@@ -8,6 +8,7 @@ use App\Contexts\Finance\Domain\ValueObjects\BudgetLimit;
 use App\Contexts\Finance\Domain\ValueObjects\Money;
 use App\Contexts\Finance\Domain\ValueObjects\Period;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentBudget;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentBudgetRepository implements BudgetRepository
 {
@@ -35,6 +36,13 @@ class EloquentBudgetRepository implements BudgetRepository
             ->get()
             ->map(fn ($model) => $this->toDomain($model))
             ->all();
+    }
+
+    public function paginateByUserId(string $userId, int $perPage = 15): LengthAwarePaginator
+    {
+        return EloquentBudget::where('user_id', $userId)
+            ->paginate($perPage)
+            ->through(fn ($model) => $this->toDomain($model));
     }
 
     public function save(Budget $budget): void

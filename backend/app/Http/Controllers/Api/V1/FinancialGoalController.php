@@ -25,11 +25,12 @@ class FinancialGoalController extends Controller
     /**
      * List financial goals
      *
-     * Returns all financial goals belonging to the authenticated user.
+     * Returns all financial goals belonging to the authenticated user. Supports pagination via `per_page` query parameter (default: 15).
      */
     public function index(Request $request)
     {
-        $goals = $this->financialGoalRepository->findByUserId((string) $request->user()->id);
+        $perPage = $request->integer('per_page', 15);
+        $goals = $this->financialGoalRepository->paginateByUserId((string) $request->user()->id, $perPage);
 
         return FinancialGoalResource::collection($goals);
     }

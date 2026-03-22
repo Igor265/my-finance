@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Contexts\Insights\Application\Queries\GetBudgetsStatusQuery;
-use App\Contexts\Insights\Application\Queries\GetGoalsProgressQuery;
-use App\Contexts\Insights\Application\Queries\GetSpendingQuery;
-use App\Contexts\Insights\Application\Queries\GetSummaryQuery;
+use App\Contexts\Insights\Application\Queries\Contracts\BudgetsStatusQueryInterface;
+use App\Contexts\Insights\Application\Queries\Contracts\GoalsProgressQueryInterface;
+use App\Contexts\Insights\Application\Queries\Contracts\SpendingQueryInterface;
+use App\Contexts\Insights\Application\Queries\Contracts\SummaryQueryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\BudgetStatusResource;
 use App\Http\Resources\Api\V1\GoalProgressResource;
@@ -16,10 +16,10 @@ use Illuminate\Http\Request;
 class InsightsController extends Controller
 {
     public function __construct(
-        private readonly GetSummaryQuery $getSummaryQuery,
-        private readonly GetSpendingQuery $getSpendingQuery,
-        private readonly GetBudgetsStatusQuery $getBudgetsStatusQuery,
-        private readonly GetGoalsProgressQuery $getGoalsProgressQuery,
+        private readonly SummaryQueryInterface $getSummaryQuery,
+        private readonly SpendingQueryInterface $getSpendingQuery,
+        private readonly BudgetsStatusQueryInterface $getBudgetsStatusQuery,
+        private readonly GoalsProgressQueryInterface $getGoalsProgressQuery,
     ) {}
 
     /**

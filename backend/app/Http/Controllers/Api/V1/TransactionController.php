@@ -29,7 +29,7 @@ class TransactionController extends Controller
     /**
      * List transactions by account
      *
-     * Returns all transactions for a specific account owned by the authenticated user.
+     * Returns all transactions for a specific account owned by the authenticated user. Supports pagination via `per_page` query parameter (default: 15).
      */
     public function index(string $accountId, Request $request)
     {
@@ -37,7 +37,8 @@ class TransactionController extends Controller
         if (! $account || $account->userId !== (string) $request->user()->id) {
             return response()->json(['message' => __('messages.transaction_not_found')], 404);
         }
-        $transactions = $this->transactionRepository->findByAccountId($accountId);
+        $perPage = $request->integer('per_page', 15);
+        $transactions = $this->transactionRepository->paginateByAccountId($accountId, $perPage);
 
         return TransactionResource::collection($transactions);
     }

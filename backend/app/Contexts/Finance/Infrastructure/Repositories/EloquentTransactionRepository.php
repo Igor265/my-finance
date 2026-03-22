@@ -8,6 +8,7 @@ use App\Contexts\Finance\Domain\ValueObjects\Money;
 use App\Contexts\Finance\Domain\ValueObjects\Period;
 use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentTransaction;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentTransactionRepository implements TransactionRepository
 {
@@ -58,6 +59,14 @@ class EloquentTransactionRepository implements TransactionRepository
             ->get()
             ->map(fn ($model) => $this->toDomain($model))
             ->all();
+    }
+
+    public function paginateByAccountId(string $accountId, int $perPage = 15): LengthAwarePaginator
+    {
+        return EloquentTransaction::where('account_id', $accountId)
+            ->orderByDesc('date')
+            ->paginate($perPage)
+            ->through(fn ($model) => $this->toDomain($model));
     }
 
     public function findByAccountIdsAndPeriod(array $accountIds, Period $period): array

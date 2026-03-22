@@ -57,6 +57,33 @@ it('should not create a financial goal with invalid data', function () {
     $response->assertUnprocessable();
 });
 
+it('should paginate financial goals', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    EloquentFinancialGoal::factory()->count(5)->create(['user_id' => $user->id]);
+
+    $response = $this->getJson('/api/v1/financial-goals?per_page=2');
+    $response->assertOk();
+    expect($response->json('data'))->toHaveCount(2);
+    expect($response->json('meta.total'))->toBe(5);
+    expect($response->json('meta.per_page'))->toBe(2);
+    expect($response->json('meta.last_page'))->toBe(3);
+});
+
+it('should navigate to second page of financial goals', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    EloquentFinancialGoal::factory()->count(3)->create(['user_id' => $user->id]);
+
+    $response = $this->getJson('/api/v1/financial-goals?per_page=2&page=2');
+    $response->assertOk();
+    expect($response->json('data'))->toHaveCount(1);
+    expect($response->json('meta.current_page'))->toBe(2);
+    expect($response->json('links.next'))->toBeNull();
+});
+
 it('should show a financial goal', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);

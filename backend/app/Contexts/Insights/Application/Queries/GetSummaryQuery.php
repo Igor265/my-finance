@@ -4,8 +4,9 @@ namespace App\Contexts\Insights\Application\Queries;
 
 use App\Contexts\Finance\Domain\Repositories\AccountRepository;
 use App\Contexts\Insights\Application\DTOs\SummaryDTO;
+use App\Contexts\Insights\Application\Queries\Contracts\SummaryQueryInterface;
 
-class GetSummaryQuery
+class GetSummaryQuery implements SummaryQueryInterface
 {
     public function __construct(
         private readonly AccountRepository $accountRepository,

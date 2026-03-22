@@ -25,11 +25,12 @@ class BudgetController extends Controller
     /**
      * List budgets
      *
-     * Returns all budgets belonging to the authenticated user.
+     * Returns all budgets belonging to the authenticated user. Supports pagination via `per_page` query parameter (default: 15).
      */
     public function index(Request $request)
     {
-        $budgets = $this->budgetRepository->findByUserId((string) $request->user()->id);
+        $perPage = $request->integer('per_page', 15);
+        $budgets = $this->budgetRepository->paginateByUserId((string) $request->user()->id, $perPage);
 
         return BudgetResource::collection($budgets);
     }

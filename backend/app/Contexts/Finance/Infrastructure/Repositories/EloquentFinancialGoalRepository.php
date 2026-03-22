@@ -6,6 +6,7 @@ use App\Contexts\Finance\Domain\Entities\FinancialGoal;
 use App\Contexts\Finance\Domain\Repositories\FinancialGoalRepository;
 use App\Contexts\Finance\Domain\ValueObjects\Money;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentFinancialGoal;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentFinancialGoalRepository implements FinancialGoalRepository
 {
@@ -34,6 +35,13 @@ class EloquentFinancialGoalRepository implements FinancialGoalRepository
             ->get()
             ->map(fn ($model) => $this->toDomain($model))
             ->all();
+    }
+
+    public function paginateByUserId(string $userId, int $perPage = 15): LengthAwarePaginator
+    {
+        return EloquentFinancialGoal::where('user_id', $userId)
+            ->paginate($perPage)
+            ->through(fn ($model) => $this->toDomain($model));
     }
 
     public function save(FinancialGoal $goal): void

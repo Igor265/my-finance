@@ -7,8 +7,9 @@ use App\Contexts\Finance\Domain\Repositories\TransactionRepository;
 use App\Contexts\Finance\Domain\ValueObjects\Period;
 use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 use App\Contexts\Insights\Application\DTOs\SpendingItemDTO;
+use App\Contexts\Insights\Application\Queries\Contracts\SpendingQueryInterface;
 
-class GetSpendingQuery
+class GetSpendingQuery implements SpendingQueryInterface
 {
     public function __construct(
         private readonly AccountRepository $accountRepository,

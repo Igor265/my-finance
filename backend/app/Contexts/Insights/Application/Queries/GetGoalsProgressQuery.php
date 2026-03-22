@@ -5,8 +5,9 @@ namespace App\Contexts\Insights\Application\Queries;
 use App\Contexts\Finance\Domain\Entities\FinancialGoal;
 use App\Contexts\Finance\Domain\Repositories\FinancialGoalRepository;
 use App\Contexts\Insights\Application\DTOs\GoalProgressDTO;
+use App\Contexts\Insights\Application\Queries\Contracts\GoalsProgressQueryInterface;
 
-class GetGoalsProgressQuery
+class GetGoalsProgressQuery implements GoalsProgressQueryInterface
 {
     public function __construct(
         private readonly FinancialGoalRepository $financialGoalRepository,

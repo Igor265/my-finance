@@ -73,6 +73,33 @@ it('should not create a duplicate category', function () {
     expect($response->json('message'))->toBe(__('messages.exceptions.CategoryAlreadyExistsException'));
 });
 
+it('should paginate categories', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    EloquentCategory::factory()->count(5)->create(['user_id' => $user->id]);
+
+    $response = $this->getJson('/api/v1/categories?per_page=2');
+    $response->assertOk();
+    expect($response->json('data'))->toHaveCount(2);
+    expect($response->json('meta.total'))->toBe(5);
+    expect($response->json('meta.per_page'))->toBe(2);
+    expect($response->json('meta.last_page'))->toBe(3);
+});
+
+it('should navigate to second page of categories', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    EloquentCategory::factory()->count(3)->create(['user_id' => $user->id]);
+
+    $response = $this->getJson('/api/v1/categories?per_page=2&page=2');
+    $response->assertOk();
+    expect($response->json('data'))->toHaveCount(1);
+    expect($response->json('meta.current_page'))->toBe(2);
+    expect($response->json('links.next'))->toBeNull();
+});
+
 it('should show a category', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);

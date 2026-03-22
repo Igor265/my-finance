@@ -88,6 +88,35 @@ it('should show only own account', function () {
     $response->assertNotFound();
 });
 
+it('should paginate accounts', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    EloquentAccount::factory()->count(5)->create(['user_id' => $user->id]);
+
+    $response = $this->getJson('/api/v1/accounts?per_page=2');
+    $response->assertOk();
+    expect($response->json('data'))->toHaveCount(2);
+    expect($response->json('meta.total'))->toBe(5);
+    expect($response->json('meta.per_page'))->toBe(2);
+    expect($response->json('meta.last_page'))->toBe(3);
+    expect($response->json('links.next'))->not->toBeNull();
+});
+
+it('should navigate to second page of accounts', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    EloquentAccount::factory()->count(3)->create(['user_id' => $user->id]);
+
+    $response = $this->getJson('/api/v1/accounts?per_page=2&page=2');
+    $response->assertOk();
+    expect($response->json('data'))->toHaveCount(1);
+    expect($response->json('meta.current_page'))->toBe(2);
+    expect($response->json('links.prev'))->not->toBeNull();
+    expect($response->json('links.next'))->toBeNull();
+});
+
 it('should create an account with initial amount reflected in balance', function () {
     $user = User::factory()->create();
     Sanctum::actingAs($user);

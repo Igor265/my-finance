@@ -7,6 +7,7 @@ use App\Contexts\Finance\Domain\Repositories\AccountRepository;
 use App\Contexts\Finance\Domain\ValueObjects\AccountType;
 use App\Contexts\Finance\Domain\ValueObjects\Money;
 use App\Contexts\Finance\Infrastructure\Persistence\Models\EloquentAccount;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentAccountRepository implements AccountRepository
 {
@@ -34,6 +35,13 @@ class EloquentAccountRepository implements AccountRepository
             ->get()
             ->map(fn ($model) => $this->toDomain($model))
             ->all();
+    }
+
+    public function paginateByUserId(string $userId, int $perPage = 15): LengthAwarePaginator
+    {
+        return EloquentAccount::where('user_id', $userId)
+            ->paginate($perPage)
+            ->through(fn ($model) => $this->toDomain($model));
     }
 
     public function save(Account $account): void

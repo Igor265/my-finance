@@ -8,8 +8,9 @@ use App\Contexts\Finance\Domain\Repositories\BudgetRepository;
 use App\Contexts\Finance\Domain\Repositories\TransactionRepository;
 use App\Contexts\Finance\Domain\ValueObjects\TransactionType;
 use App\Contexts\Insights\Application\DTOs\BudgetStatusDTO;
+use App\Contexts\Insights\Application\Queries\Contracts\BudgetsStatusQueryInterface;
 
-class GetBudgetsStatusQuery
+class GetBudgetsStatusQuery implements BudgetsStatusQueryInterface
 {
     public function __construct(
         private readonly BudgetRepository $budgetRepository,

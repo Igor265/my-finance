@@ -25,13 +25,14 @@ class CategoryController extends Controller
     /**
      * List categories
      *
-     * Returns all categories belonging to the authenticated user.
+     * Returns all categories belonging to the authenticated user. Supports pagination via `per_page` query parameter (default: 15).
      */
     public function index(Request $request)
     {
-        $category = $this->categoryRepository->findByUserId((string) $request->user()->id);
+        $perPage = $request->integer('per_page', 15);
+        $categories = $this->categoryRepository->paginateByUserId((string) $request->user()->id, $perPage);
 
-        return CategoryResource::collection($category);
+        return CategoryResource::collection($categories);
     }
 
     /**

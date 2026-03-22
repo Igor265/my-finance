@@ -25,12 +25,13 @@ class AccountController extends Controller
     /**
      * List accounts
      *
-     * Returns all accounts belonging to the authenticated user.
+     * Returns all accounts belonging to the authenticated user. Supports pagination via `per_page` query parameter (default: 15).
      */
     public function index(Request $request)
     {
         $userId = (string) $request->user()->id;
-        $accounts = $this->accountRepository->findByUserId($userId);
+        $perPage = $request->integer('per_page', 15);
+        $accounts = $this->accountRepository->paginateByUserId($userId, $perPage);
 
         return AccountResource::collection($accounts);
     }

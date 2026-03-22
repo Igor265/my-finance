@@ -28,3 +28,10 @@ it('should throw an error when description is filed with spaces', function () {
     $date = new DateTimeImmutable;
     expect(fn () => new Transaction('1', '1', $money, TransactionType::Income, '      ', '1', $date))->toThrow(InvalidArgumentException::class);
 });
+
+it('should create a transaction with null category', function () {
+    $money = new Money(1000);
+    $date = new DateTimeImmutable;
+    $transaction = new Transaction('1', '1', $money, TransactionType::Income, 'test', null, $date);
+    expect($transaction->categoryId)->toBeNull();
+});

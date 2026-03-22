@@ -87,3 +87,18 @@ it('should show only own account', function () {
     $response = $this->getJson("/api/v1/accounts/{$account->id}");
     $response->assertNotFound();
 });
+
+it('should create an account with initial amount reflected in balance', function () {
+    $user = User::factory()->create();
+    Sanctum::actingAs($user);
+
+    $response = $this->postJson('/api/v1/accounts', [
+        'name' => 'Savings',
+        'type' => 'savings',
+        'initial_amount' => 500.00,
+        'currency' => 'BRL',
+    ]);
+
+    $response->assertCreated();
+    expect($response->json('data.balance'))->toBe(500);
+});

@@ -23,3 +23,15 @@ it('should be false when not exceed the budged', function () {
     $isExceeded = $this->budgedVerification->isExceeded($budget, Money::fromFloat(500));
     expect($isExceeded)->toBeFalse();
 });
+
+it('should be false when spent is exactly equal to the maximum', function () {
+    $budget = new Budget('1', 'user-1', '1', $this->budgetLimit, $this->period);
+    $isExceeded = $this->budgedVerification->isExceeded($budget, Money::fromFloat(1000));
+    expect($isExceeded)->toBeFalse();
+});
+
+it('should be true when spent is one cent above the maximum', function () {
+    $budget = new Budget('1', 'user-1', '1', $this->budgetLimit, $this->period);
+    $isExceeded = $this->budgedVerification->isExceeded($budget, new Money(100001));
+    expect($isExceeded)->toBeTrue();
+});

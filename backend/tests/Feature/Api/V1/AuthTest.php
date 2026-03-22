@@ -45,3 +45,21 @@ it('should not logout when token doesnt exist', function () {
 
     $response->assertUnauthorized();
 });
+
+it('should block login after 5 failed attempts', function () {
+    $user = User::factory()->create();
+
+    foreach (range(1, 5) as $i) {
+        $this->postJson('/api/v1/auth/login', [
+            'email' => $user->email,
+            'password' => 'wrong-password',
+        ]);
+    }
+
+    $response = $this->postJson('/api/v1/auth/login', [
+        'email' => $user->email,
+        'password' => 'wrong-password',
+    ]);
+
+    $response->assertStatus(429);
+});

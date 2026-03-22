@@ -62,3 +62,17 @@ it('should subtract the transfer of an account', function () {
     $money = $this->calculator->calculate('acc-1', $transactions, $this->period);
     expect($money->amount)->toBe(200000);
 });
+
+it('should return zero when there are no transactions', function () {
+    $money = $this->calculator->calculate('acc-1', [], $this->period);
+    expect($money->amount)->toBe(0);
+});
+
+it('should return zero when no transactions fall within the period', function () {
+    $transactions = [
+        new Transaction('1', 'acc-1', Money::fromFloat(3000), TransactionType::Income, 'test', null,
+            new DateTimeImmutable('2025-01-10')),
+    ];
+    $money = $this->calculator->calculate('acc-1', $transactions, $this->period);
+    expect($money->amount)->toBe(0);
+});

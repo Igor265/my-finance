@@ -22,6 +22,11 @@ class InsightsController extends Controller
         private readonly GetGoalsProgressQuery $getGoalsProgressQuery,
     ) {}
 
+    /**
+     * Financial summary
+     *
+     * Returns the total balance across all accounts and account count for the authenticated user.
+     */
     public function summary(Request $request): SummaryResource
     {
         $summary = $this->getSummaryQuery->execute((string) $request->user()->id);
@@ -29,6 +34,11 @@ class InsightsController extends Controller
         return new SummaryResource($summary);
     }
 
+    /**
+     * Spending by category
+     *
+     * Returns expenses grouped by category for the current month.
+     */
     public function spending(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         $items = $this->getSpendingQuery->execute((string) $request->user()->id);
@@ -36,6 +46,11 @@ class InsightsController extends Controller
         return SpendingItemResource::collection($items);
     }
 
+    /**
+     * Budget status
+     *
+     * Returns each budget with how much was spent vs the maximum limit and the percentage used.
+     */
     public function budgets(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         $statuses = $this->getBudgetsStatusQuery->execute((string) $request->user()->id);
@@ -43,6 +58,11 @@ class InsightsController extends Controller
         return BudgetStatusResource::collection($statuses);
     }
 
+    /**
+     * Goals progress
+     *
+     * Returns each financial goal with current progress percentage towards the target amount.
+     */
     public function goals(Request $request): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
     {
         $goals = $this->getGoalsProgressQuery->execute((string) $request->user()->id);

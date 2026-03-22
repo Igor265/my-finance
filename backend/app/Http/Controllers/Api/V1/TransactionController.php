@@ -27,7 +27,9 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List transactions by account
+     *
+     * Returns all transactions for a specific account owned by the authenticated user.
      */
     public function index(string $accountId, Request $request)
     {
@@ -41,7 +43,9 @@ class TransactionController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create transaction
+     *
+     * Creates a new transaction for an account owned by the authenticated user.
      */
     public function store(StoreTransactionRequest $request)
     {
@@ -65,7 +69,9 @@ class TransactionController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get transaction
+     *
+     * Returns a specific transaction. Returns 404 if not found or not owned by the authenticated user.
      */
     public function show(string $id, Request $request)
     {

@@ -23,7 +23,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List categories
+     *
+     * Returns all categories belonging to the authenticated user.
      */
     public function index(Request $request)
     {
@@ -33,7 +35,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create category
+     *
+     * Creates a new transaction category. Returns 422 if a category with the same name already exists.
      */
     public function store(StoreCategoryRequest $request)
     {
@@ -50,7 +54,9 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get category
+     *
+     * Returns a specific category owned by the authenticated user.
      */
     public function show(string $id, Request $request)
     {

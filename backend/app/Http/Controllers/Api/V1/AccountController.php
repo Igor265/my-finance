@@ -23,7 +23,9 @@ class AccountController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List accounts
+     *
+     * Returns all accounts belonging to the authenticated user.
      */
     public function index(Request $request)
     {
@@ -34,7 +36,9 @@ class AccountController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create account
+     *
+     * Creates a new financial account for the authenticated user.
      */
     public function store(StoreAccountRequest $request)
     {
@@ -50,7 +54,9 @@ class AccountController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get account
+     *
+     * Returns a specific account. Returns 404 if not found or not owned by the authenticated user.
      */
     public function show(string $id, Request $request)
     {

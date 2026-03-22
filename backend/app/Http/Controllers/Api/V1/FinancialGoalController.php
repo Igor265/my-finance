@@ -22,6 +22,11 @@ class FinancialGoalController extends Controller
         $this->financialGoalRepository = $financialGoalRepository;
     }
 
+    /**
+     * List financial goals
+     *
+     * Returns all financial goals belonging to the authenticated user.
+     */
     public function index(Request $request)
     {
         $goals = $this->financialGoalRepository->findByUserId((string) $request->user()->id);
@@ -29,6 +34,11 @@ class FinancialGoalController extends Controller
         return FinancialGoalResource::collection($goals);
     }
 
+    /**
+     * Create financial goal
+     *
+     * Creates a new savings goal with a target amount and deadline.
+     */
     public function store(StoreFinancialGoalRequest $request)
     {
         $validated = $request->validated();
@@ -44,6 +54,11 @@ class FinancialGoalController extends Controller
         return (new FinancialGoalResource($goal))->response()->setStatusCode(201);
     }
 
+    /**
+     * Get financial goal
+     *
+     * Returns a specific financial goal owned by the authenticated user.
+     */
     public function show(string $id, Request $request)
     {
         $goal = $this->financialGoalRepository->findById($id);

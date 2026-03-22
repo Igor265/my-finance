@@ -23,7 +23,9 @@ class BudgetController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List budgets
+     *
+     * Returns all budgets belonging to the authenticated user.
      */
     public function index(Request $request)
     {
@@ -32,6 +34,11 @@ class BudgetController extends Controller
         return BudgetResource::collection($budgets);
     }
 
+    /**
+     * Create budget
+     *
+     * Creates a spending budget for a category within a date period.
+     */
     public function store(StoreBudgetRequest $request)
     {
         $validated = $request->validated();
@@ -49,6 +56,11 @@ class BudgetController extends Controller
         return (new BudgetResource($budget))->response()->setStatusCode(201);
     }
 
+    /**
+     * Get budget
+     *
+     * Returns a specific budget owned by the authenticated user.
+     */
     public function show(string $id, Request $request)
     {
         $budget = $this->budgetRepository->findById($id);

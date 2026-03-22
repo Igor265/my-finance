@@ -14,7 +14,7 @@ class EloquentAccountRepository implements AccountRepository
     {
         return new Account(
             $model->id,
-            $model->user_id,
+            (string) $model->user_id,
             $model->name,
             new Money($model->balance, $model->currency),
             AccountType::from($model->type),

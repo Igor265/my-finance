@@ -27,7 +27,7 @@ class BudgetController extends Controller
      */
     public function index(Request $request)
     {
-        $budgets = $this->budgetRepository->findByUserId($request->user()->id);
+        $budgets = $this->budgetRepository->findByUserId((string) $request->user()->id);
 
         return BudgetResource::collection($budgets);
     }
@@ -36,7 +36,7 @@ class BudgetController extends Controller
     {
         $validated = $request->validated();
         $dto = new CreateBudgetDTO(
-            $request->user()->id,
+            (string) $request->user()->id,
             $validated['category_id'],
             $validated['maximum_amount'],
             $validated['alert_percentage'],

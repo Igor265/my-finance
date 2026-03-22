@@ -24,7 +24,7 @@ class FinancialGoalController extends Controller
 
     public function index(Request $request)
     {
-        $goals = $this->financialGoalRepository->findByUserId($request->user()->id);
+        $goals = $this->financialGoalRepository->findByUserId((string) $request->user()->id);
 
         return FinancialGoalResource::collection($goals);
     }
@@ -33,7 +33,7 @@ class FinancialGoalController extends Controller
     {
         $validated = $request->validated();
         $dto = new CreateFinancialGoalDTO(
-            $request->user()->id,
+            (string) $request->user()->id,
             $validated['name'],
             $validated['target_amount'],
             $validated['deadline'],

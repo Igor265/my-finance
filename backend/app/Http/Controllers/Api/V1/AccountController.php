@@ -27,7 +27,7 @@ class AccountController extends Controller
      */
     public function index(Request $request)
     {
-        $userId = $request->user()->id;
+        $userId = (string) $request->user()->id;
         $accounts = $this->accountRepository->findByUserId($userId);
 
         return AccountResource::collection($accounts);
@@ -40,7 +40,7 @@ class AccountController extends Controller
     {
         $validated = $request->validated();
         $dto = new CreateAccountDTO(
-            $request->user()->id,
+            (string) $request->user()->id,
             $validated['name'], $validated['type'],
             $validated['initial_amount'] ?? 0.0, $validated['currency'] ?? 'BRL'
         );

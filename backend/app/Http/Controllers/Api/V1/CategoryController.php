@@ -27,7 +27,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $category = $this->categoryRepository->findByUserId($request->user()->id);
+        $category = $this->categoryRepository->findByUserId((string) $request->user()->id);
 
         return CategoryResource::collection($category);
     }
@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         $validated = $request->validated();
         $dto = new CreateCategoryDTO(
-            $request->user()->id,
+            (string) $request->user()->id,
             $validated['name'],
             $validated['type'],
         );

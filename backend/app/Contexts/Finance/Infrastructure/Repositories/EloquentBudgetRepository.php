@@ -15,7 +15,7 @@ class EloquentBudgetRepository implements BudgetRepository
     {
         return new Budget(
             $model->id,
-            $model->user_id,
+            (string) $model->user_id,
             $model->category_id,
             new BudgetLimit(new Money($model->maximum_amount, $model->currency), $model->alert_percentage),
             Period::fromStrings($model->start_date, $model->end_date)

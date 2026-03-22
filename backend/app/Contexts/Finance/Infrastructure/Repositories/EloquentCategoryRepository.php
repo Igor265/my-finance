@@ -13,7 +13,7 @@ class EloquentCategoryRepository implements CategoryRepository
     {
         return new Category(
             $model->id,
-            $model->user_id,
+            (string) $model->user_id,
             $model->name,
             TransactionType::from($model->type),
         );

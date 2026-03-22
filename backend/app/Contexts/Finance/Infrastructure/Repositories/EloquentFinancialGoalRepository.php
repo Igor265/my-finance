@@ -13,7 +13,7 @@ class EloquentFinancialGoalRepository implements FinancialGoalRepository
     {
         return new FinancialGoal(
             $model->id,
-            $model->user_id,
+            (string) $model->user_id,
             $model->name,
             new Money($model->target_amount, $model->currency),
             new Money($model->current_amount, $model->currency),

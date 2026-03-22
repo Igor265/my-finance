@@ -34,3 +34,7 @@ jobs:
       - name: Run tests
         run: ./vendor/bin/pest --no-coverage
         working-directory: backend
+
+      - name: Run static analysis
+        run: ./vendor/bin/phpstan analyse --no-progress
+        working-directory: backend
